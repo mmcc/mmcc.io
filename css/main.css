@@ -1,0 +1,22 @@
+.logo {
+  text-indent: -9999px;
+  height: 80px;
+
+  background: url(/img/mmcc.svg);
+  background-size: 416px 80px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.social-links {
+  text-align: center;
+}
+
+.social-links ul li {
+  display: inline-block;
+  margin-left: 2em;
+}
+
+.social-links ul li:first-child {
+  margin-left: 0;
+}
