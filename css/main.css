@@ -44,7 +44,7 @@ body {
   border-bottom: 4px solid #D7DADB;
 }
 
-.logo:hover {
+.logo:hover, .logo:focus {
   background: url(/img/mattmcclure.png);
   background-size: 919px 128px;
   background-position: bottom;
