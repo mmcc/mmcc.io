@@ -35,7 +35,7 @@ body {
   text-indent: -9999px;
   height: 128px;
 
-  background: url(/img/mmcc.svg);
+  background: url(/img/mmcc.png);
   background-size: 416px 80px;
   background-position: bottom;
   background-repeat: no-repeat;
@@ -45,7 +45,7 @@ body {
 }
 
 .logo:hover {
-  background: url(/img/mattmcclure.svg);
+  background: url(/img/mattmcclure.png);
   background-size: 919px 128px;
   background-position: bottom;
   background-repeat: no-repeat;
