@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+---
+
+<BaseLayout title="mmcc - Matthew McClure">
+  <section class="intro">
+    <h1>Hey, I'm Matt.</h1>
+    <p>
+      I'm a marketing leader at <a href="https://mux.com">Mux</a>, where I work
+      on developer tools for video. I've been building things on the web for a
+      long time and occasionally write about it here.
+    </p>
+    <p>
+      Previously, I've worked on developer experience, documentation, and
+      building communities around video infrastructure. I like making complex
+      things feel simple.
+    </p>
+    <SocialLinks />
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .intro h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .intro p {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    max-width: 55ch;
+  }
+
+  .intro p a {
+    color: var(--color-text);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .intro p a:hover {
+    color: var(--color-accent);
+  }
+
+  .intro :global(.social-links) {
+    margin-top: var(--spacing-lg);
+  }
+</style>

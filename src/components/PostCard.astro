@@ -1,0 +1,63 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  date: Date;
+  slug: string;
+}
+
+const { title, description, date, slug } = Astro.props;
+
+const formattedDate = date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<article class="post-card">
+  <a href={`/blog/${slug}`}>
+    <h3>{title}</h3>
+    {description && <p>{description}</p>}
+    <time datetime={date.toISOString()}>{formattedDate}</time>
+  </a>
+</article>
+
+<style>
+  .post-card {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .post-card a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    padding: var(--spacing-sm);
+    margin: calc(-1 * var(--spacing-sm));
+    border-radius: 8px;
+    transition: background-color 0.15s ease;
+  }
+
+  .post-card a:hover {
+    background-color: var(--color-code-bg);
+  }
+
+  .post-card h3 {
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+  }
+
+  .post-card a:hover h3 {
+    color: var(--color-accent);
+  }
+
+  .post-card p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .post-card time {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+</style>

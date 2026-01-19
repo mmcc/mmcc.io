@@ -1,0 +1,33 @@
+---
+const links = [
+  { name: "GitHub", url: "https://github.com/mmcc", icon: "github" },
+  { name: "X", url: "https://x.com/matt_mcclure", icon: "x" },
+  {
+    name: "LinkedIn",
+    url: "https://linkedin.com/in/mmcclure",
+    icon: "linkedin",
+  },
+];
+---
+
+<ul class="social-links">
+  {
+    links.map((link) => (
+      <li>
+        <a href={link.url} target="_blank" rel="noopener noreferrer">
+          {link.name}
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .social-links {
+    display: flex;
+    gap: var(--spacing-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,22 @@
+{
+  "name": "mmcc-io",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && biome check && astro build",
+    "preview": "astro preview",
+    "check": "astro check && biome check",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.16.11"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@biomejs/biome": "^2.3.11",
+    "typescript": "^5.8.0"
+  }
+}
