@@ -8,36 +8,56 @@ const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="Blog - mmcc" description="Posts by Matthew McClure">
+<BaseLayout title="posts / mmcc" description="Posts by Matthew McClure">
   <section class="blog-list">
-    <h1>Blog</h1>
+    <h1>posts</h1>
     {
       posts.length === 0 ? (
-        <p class="empty-state">No posts yet. Check back soon.</p>
+        <p class="empty">Nothing here yet.</p>
       ) : (
-        posts.map((post) => (
-          <PostCard
-            title={post.data.title}
-            description={post.data.description}
-            date={post.data.date}
-            slug={post.id}
-          />
-        ))
+        <ul class="posts">
+          {posts.map((post) => (
+            <li>
+              <PostCard
+                title={post.data.title}
+                description={post.data.description}
+                date={post.data.date}
+                slug={post.id}
+              />
+            </li>
+          ))}
+        </ul>
       )
     }
   </section>
 </BaseLayout>
 
 <style>
-  .blog-list {
-    padding: var(--spacing-lg) 0;
+  h1 {
+    font-size: 0.875rem;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: calc(var(--spacing-unit) * 6);
   }
 
-  .blog-list h1 {
-    margin-bottom: var(--spacing-lg);
+  .posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  .empty-state {
+  .posts li {
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    padding-bottom: calc(var(--spacing-unit) * 4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .posts li:last-child {
+    border-bottom: none;
+  }
+
+  .empty {
     color: var(--color-text-muted);
   }
 </style>

@@ -1,23 +1,22 @@
 ---
 const links = [
-  { name: "GitHub", url: "https://github.com/mmcc", icon: "github" },
-  { name: "X", url: "https://x.com/matt_mcclure", icon: "x" },
-  {
-    name: "LinkedIn",
-    url: "https://linkedin.com/in/mmcclure",
-    icon: "linkedin",
-  },
+  { name: "github", url: "https://github.com/mmcc" },
+  { name: "x", url: "https://x.com/matt_mcclure" },
+  { name: "linkedin", url: "https://linkedin.com/in/mmcclure" },
 ];
 ---
 
 <ul class="social-links">
   {
-    links.map((link) => (
-      <li>
-        <a href={link.url} target="_blank" rel="noopener noreferrer">
-          {link.name}
-        </a>
-      </li>
+    links.map((link, i) => (
+      <>
+        <li>
+          <a href={link.url} target="_blank" rel="noopener noreferrer">
+            {link.name}
+          </a>
+        </li>
+        {i < links.length - 1 && <li class="sep">/</li>}
+      </>
     ))
   }
 </ul>
@@ -25,9 +24,23 @@ const links = [
 <style>
   .social-links {
     display: flex;
-    gap: var(--spacing-md);
+    gap: calc(var(--spacing-unit) * 2);
     list-style: none;
     padding: 0;
     margin: 0;
+    font-size: 0.875rem;
+  }
+
+  .social-links a {
+    color: var(--color-text-muted);
+  }
+
+  .social-links a:hover {
+    color: var(--color-text);
+  }
+
+  .sep {
+    color: var(--color-border);
+    user-select: none;
   }
 </style>

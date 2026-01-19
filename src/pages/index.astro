@@ -3,51 +3,42 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SocialLinks from "../components/SocialLinks.astro";
 ---
 
-<BaseLayout title="mmcc - Matthew McClure">
+<BaseLayout title="mmcc">
   <section class="intro">
-    <h1>Hey, I'm Matt.</h1>
+    <p class="greeting">Hi, I'm Matt.</p>
     <p>
-      I'm a marketing leader at <a href="https://mux.com">Mux</a>, where I work
-      on developer tools for video. I've been building things on the web for a
-      long time and occasionally write about it here.
+      Marketing at <a href="https://mux.com">Mux</a>, building developer tools
+      for video. Previously worked on developer experience, documentation, and
+      communities around video infrastructure.
     </p>
-    <p>
-      Previously, I've worked on developer experience, documentation, and
-      building communities around video infrastructure. I like making complex
-      things feel simple.
-    </p>
-    <SocialLinks />
+    <p>I like making complex things feel simple.</p>
+
+    <div class="links">
+      <SocialLinks />
+    </div>
   </section>
 </BaseLayout>
 
 <style>
   .intro {
-    padding: var(--spacing-xl) 0;
+    max-width: 50ch;
   }
 
-  .intro h1 {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-md);
+  .greeting {
+    margin-bottom: calc(var(--spacing-unit) * 4);
   }
 
   .intro p {
-    font-size: 1.125rem;
     color: var(--color-text-muted);
-    max-width: 55ch;
   }
 
   .intro p a {
     color: var(--color-text);
-    font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 2px;
   }
 
-  .intro p a:hover {
-    color: var(--color-accent);
-  }
-
-  .intro :global(.social-links) {
-    margin-top: var(--spacing-lg);
+  .links {
+    margin-top: calc(var(--spacing-unit) * 6);
+    padding-top: calc(var(--spacing-unit) * 4);
+    border-top: 1px solid var(--color-border);
   }
 </style>
