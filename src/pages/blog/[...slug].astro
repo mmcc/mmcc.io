@@ -13,13 +13,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-const formattedDate = post.data.date
-  .toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  })
-  .replace(/\//g, "-");
+const formattedDate = post.data.date.toISOString().split("T")[0];
 ---
 
 <BaseLayout

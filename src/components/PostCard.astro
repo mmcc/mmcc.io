@@ -8,13 +8,7 @@ interface Props {
 
 const { title, description, date, slug } = Astro.props;
 
-const formattedDate = date
-  .toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  })
-  .replace(/\//g, "-");
+const formattedDate = date.toISOString().split("T")[0];
 ---
 
 <article class="post-card">
