@@ -57,7 +57,7 @@ const { title, description = "Matthew McClure's personal site" } = Astro.props;
 
   nav {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: calc(var(--spacing-unit) * 2);
     font-size: 0.875rem;
   }
@@ -74,10 +74,15 @@ const { title, description = "Matthew McClure's personal site" } = Astro.props;
 
   .nav-links {
     display: flex;
+    align-items: baseline;
     gap: calc(var(--spacing-unit) * 3);
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  .nav-links li {
+    margin: 0;
   }
 
   .nav-links a {
