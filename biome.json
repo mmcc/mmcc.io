@@ -11,9 +11,10 @@
       "**/*.ts",
       "**/*.js",
       "**/*.mjs",
-      "**/*.json",
       "**/*.css",
-      "**/*.md"
+      "**/*.md",
+      "**/*.json",
+      "!vercel.json"
     ]
   },
   "formatter": {
