@@ -23,6 +23,8 @@ const posts = (await getCollection("blog"))
                 description={post.data.description}
                 date={post.data.date}
                 slug={post.id}
+                url={post.data.url}
+                source={post.data.source}
               />
             </li>
           ))}

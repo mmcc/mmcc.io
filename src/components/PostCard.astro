@@ -4,16 +4,22 @@ interface Props {
   description?: string;
   date: Date;
   slug: string;
+  url?: string;
+  source?: string;
 }
 
-const { title, description, date, slug } = Astro.props;
+const { title, description, date, slug, url, source } = Astro.props;
 
 const formattedDate = date.toISOString().split("T")[0];
+const href = url || `/blog/${slug}`;
 ---
 
 <article class="post-card">
-  <a href={`/blog/${slug}`}>
-    <time datetime={date.toISOString()}>{formattedDate}</time>
+  <a href={href}>
+    <div class="meta">
+      <time datetime={date.toISOString()}>{formattedDate}</time>
+      {source && <span class="source">{source}</span>}
+    </div>
     <h3>{title}</h3>
     {description && <p>{description}</p>}
   </a>
@@ -25,10 +31,24 @@ const formattedDate = date.toISOString().split("T")[0];
     text-decoration: none;
   }
 
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .post-card time {
     font-size: 0.8rem;
     color: var(--color-text-muted);
     font-variant-numeric: tabular-nums;
+  }
+
+  .source {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg-subtle, rgba(128, 128, 128, 0.1));
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
   }
 
   .post-card h3 {
