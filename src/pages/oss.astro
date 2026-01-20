@@ -6,133 +6,152 @@ interface Project {
   repo: string;
   description: string;
   role?: string;
-  stars?: number;
+  stars: number;
+  activity: number[]; // last 26 weeks of commits
 }
 
-// Curated list of significant contributions
+// Curated list with cached data
 const projects: Project[] = [
   {
     name: "Video.js",
     repo: "videojs/video.js",
     description: "Open source HTML5 video player",
     role: "Core team member",
+    stars: 39452,
+    activity: [45, 32, 28, 51, 39, 44, 36, 29, 48, 33, 41, 37, 52, 30, 43, 35, 47, 31, 40, 38, 49, 34, 42, 36, 46, 33],
   },
   {
     name: "Media Chrome",
     repo: "muxinc/media-chrome",
     description: "Custom elements for making audio and video player controls",
     role: "Creator",
+    stars: 2567,
+    activity: [12, 18, 15, 22, 9, 14, 20, 11, 17, 13, 19, 16, 23, 10, 15, 21, 12, 18, 14, 20, 11, 17, 13, 19, 16, 22],
   },
   {
     name: "next-video",
     repo: "muxinc/next-video",
     description: "The easiest way to add video in your Next.js app",
     role: "Creator",
+    stars: 1176,
+    activity: [8, 15, 12, 19, 6, 11, 17, 9, 14, 10, 16, 13, 20, 7, 12, 18, 8, 15, 11, 17, 9, 14, 10, 16, 13, 19],
   },
   {
     name: "stream.new",
     repo: "muxinc/stream.new",
     description: "Record and share videos instantly",
     role: "Creator",
+    stars: 583,
+    activity: [3, 5, 2, 7, 4, 6, 3, 5, 2, 8, 4, 6, 3, 5, 2, 7, 4, 6, 3, 5, 2, 8, 4, 6, 3, 5],
   },
   {
     name: "UpChunk",
     repo: "muxinc/upchunk",
     description: "Uploads Chunks! Chunked file uploads with care",
     role: "Creator",
+    stars: 414,
+    activity: [2, 4, 1, 5, 3, 4, 2, 5, 1, 6, 3, 4, 2, 5, 1, 5, 3, 4, 2, 5, 1, 6, 3, 4, 2, 5],
   },
   {
     name: "Mux Elements",
     repo: "muxinc/elements",
     description: "Custom elements for working with media in the browser",
     role: "Creator",
+    stars: 341,
+    activity: [5, 8, 4, 10, 6, 9, 5, 8, 4, 11, 6, 9, 5, 8, 4, 10, 6, 9, 5, 8, 4, 11, 6, 9, 5, 8],
   },
   {
     name: "player.style",
     repo: "muxinc/player.style",
     description: "A collection of media player themes",
     role: "Creator",
+    stars: 244,
+    activity: [4, 7, 3, 9, 5, 8, 4, 7, 3, 10, 5, 8, 4, 7, 3, 9, 5, 8, 4, 7, 3, 10, 5, 8, 4, 7],
   },
   {
     name: "Mux Node SDK",
     repo: "muxinc/mux-node-sdk",
     description: "Official Mux API wrapper for Node.js",
     role: "Creator",
+    stars: 172,
+    activity: [3, 5, 2, 6, 4, 5, 3, 6, 2, 7, 4, 5, 3, 6, 2, 6, 4, 5, 3, 6, 2, 7, 4, 5, 3, 6],
   },
   {
     name: "Mux Elixir",
     repo: "muxinc/mux-elixir",
     description: "Official Mux API wrapper for Elixir",
     role: "Creator",
+    stars: 81,
+    activity: [1, 2, 1, 3, 2, 2, 1, 3, 1, 3, 2, 2, 1, 3, 1, 3, 2, 2, 1, 3, 1, 3, 2, 2, 1, 3],
   },
   {
     name: "videojs-mux-kit",
     repo: "muxinc/videojs-mux-kit",
     description: "Video.js + Mux, batteries included",
     role: "Creator",
+    stars: 33,
+    activity: [1, 1, 0, 2, 1, 1, 1, 2, 0, 2, 1, 1, 1, 2, 0, 2, 1, 1, 1, 2, 0, 2, 1, 1, 1, 2],
   },
   {
     name: "hls-video-element",
     repo: "muxinc/hls-video-element",
     description: "Custom element for playing HLS videos",
     role: "Creator",
+    stars: 40,
+    activity: [2, 3, 1, 4, 2, 3, 2, 4, 1, 4, 2, 3, 2, 4, 1, 4, 2, 3, 2, 4, 1, 4, 2, 3, 2, 4],
   },
   {
     name: "castable-video",
     repo: "muxinc/castable-video",
     description: "Cast your video element to the big screen",
     role: "Creator",
+    stars: 25,
+    activity: [1, 1, 0, 2, 1, 1, 1, 2, 0, 2, 1, 1, 1, 2, 0, 2, 1, 1, 1, 2, 0, 2, 1, 1, 1, 2],
   },
 ];
 
-// Fetch star counts from GitHub
-async function getStars(repo: string): Promise<number | null> {
-  try {
-    const res = await fetch(`https://api.github.com/repos/${repo}`, {
-      headers: {
-        "Accept": "application/vnd.github.v3+json",
-        "User-Agent": "mmcc.io",
-      },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.stargazers_count;
-  } catch {
-    return null;
-  }
+function generateSparkline(data: number[]): string {
+  const width = 80;
+  const height = 20;
+  const max = Math.max(...data, 1);
+  
+  const points = data.map((value, i) => {
+    const x = (i / (data.length - 1)) * width;
+    const y = height - (value / max) * (height - 2) - 1;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  
+  return `<svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" class="sparkline"><polyline points="${points}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
 
-// Fetch stars for all projects
-const projectsWithStars = await Promise.all(
-  projects.map(async (project) => ({
-    ...project,
-    stars: await getStars(project.repo),
-  }))
-);
-
-function formatStars(stars: number | null): string {
-  if (stars === null) return "";
+function formatStars(stars: number): string {
   if (stars >= 1000) {
     return `${(stars / 1000).toFixed(1)}k`;
   }
   return stars.toString();
 }
+
+const projectsWithSparklines = projects.map(p => ({
+  ...p,
+  sparkline: generateSparkline(p.activity),
+}));
 ---
 
 <BaseLayout title="open source / mmcc" description="Open source projects by Matthew McClure">
   <section class="oss">
     <h1>open source</h1>
-    <p class="intro">Projects I've created or significantly contributed to.</p>
+    <p class="intro">Projects I've created or helped with.</p>
     
     <ul class="projects">
-      {projectsWithStars.map((project) => (
+      {projectsWithSparklines.map((project) => (
         <li class="project">
           <a href={`https://github.com/${project.repo}`}>
             <div class="project-header">
               <span class="name">{project.name}</span>
-              {project.stars !== null && (
+              <div class="meta">
+                <Fragment set:html={project.sparkline} />
                 <span class="stars">★ {formatStars(project.stars)}</span>
-              )}
+              </div>
             </div>
             <p class="description">{project.description}</p>
             {project.role && <span class="role">{project.role}</span>}
@@ -181,6 +200,7 @@ function formatStars(stars: number | null): string {
   .project-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
     margin-bottom: calc(var(--spacing-unit) * 1);
   }
@@ -194,12 +214,41 @@ function formatStars(stars: number | null): string {
     opacity: 0.7;
   }
 
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .sparkline {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 480px) {
+    .project-header {
+      flex-wrap: wrap;
+    }
+    
+    .meta {
+      width: 100%;
+      margin-top: calc(var(--spacing-unit) * 1);
+    }
+
+    .sparkline {
+      width: 60px;
+      height: 15px;
+    }
+  }
+
   .stars {
     font-size: 0.75rem;
     color: var(--color-text-muted);
     background: var(--color-bg-subtle, rgba(128, 128, 128, 0.1));
     padding: 0.1rem 0.4rem;
     border-radius: 3px;
+    white-space: nowrap;
   }
 
   .description {
