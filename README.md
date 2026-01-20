@@ -18,6 +18,19 @@ npm run dev
 - `npm run format` - Format code with Biome
 - `npm run lint` - Lint with Biome
 
+## Syncing external posts
+
+```bash
+npm run sync           # Fetch posts from mux.com + demuxed.com
+npm run sync --dry-run # Preview without writing
+```
+
+Uses Puppeteer to scrape author pages (bypasses Vercel bot protection).
+
 ## Deployment
 
 Pushes to `main`/`master` automatically deploy to GitHub Pages via Actions.
+
+## TODO
+
+- [ ] Add `GITHUB_TOKEN` env var and fetch real commit activity for /oss sparklines
