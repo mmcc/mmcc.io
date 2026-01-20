@@ -1,0 +1,219 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+interface Project {
+  name: string;
+  repo: string;
+  description: string;
+  role?: string;
+  stars?: number;
+}
+
+// Curated list of significant contributions
+const projects: Project[] = [
+  {
+    name: "Video.js",
+    repo: "videojs/video.js",
+    description: "Open source HTML5 video player",
+    role: "Core team member",
+  },
+  {
+    name: "Media Chrome",
+    repo: "muxinc/media-chrome",
+    description: "Custom elements for making audio and video player controls",
+    role: "Creator",
+  },
+  {
+    name: "next-video",
+    repo: "muxinc/next-video",
+    description: "The easiest way to add video in your Next.js app",
+    role: "Creator",
+  },
+  {
+    name: "stream.new",
+    repo: "muxinc/stream.new",
+    description: "Record and share videos instantly",
+    role: "Creator",
+  },
+  {
+    name: "UpChunk",
+    repo: "muxinc/upchunk",
+    description: "Uploads Chunks! Chunked file uploads with care",
+    role: "Creator",
+  },
+  {
+    name: "Mux Elements",
+    repo: "muxinc/elements",
+    description: "Custom elements for working with media in the browser",
+    role: "Creator",
+  },
+  {
+    name: "player.style",
+    repo: "muxinc/player.style",
+    description: "A collection of media player themes",
+    role: "Creator",
+  },
+  {
+    name: "Mux Node SDK",
+    repo: "muxinc/mux-node-sdk",
+    description: "Official Mux API wrapper for Node.js",
+    role: "Creator",
+  },
+  {
+    name: "Mux Elixir",
+    repo: "muxinc/mux-elixir",
+    description: "Official Mux API wrapper for Elixir",
+    role: "Creator",
+  },
+  {
+    name: "videojs-mux-kit",
+    repo: "muxinc/videojs-mux-kit",
+    description: "Video.js + Mux, batteries included",
+    role: "Creator",
+  },
+  {
+    name: "hls-video-element",
+    repo: "muxinc/hls-video-element",
+    description: "Custom element for playing HLS videos",
+    role: "Creator",
+  },
+  {
+    name: "castable-video",
+    repo: "muxinc/castable-video",
+    description: "Cast your video element to the big screen",
+    role: "Creator",
+  },
+];
+
+// Fetch star counts from GitHub
+async function getStars(repo: string): Promise<number | null> {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}`, {
+      headers: {
+        "Accept": "application/vnd.github.v3+json",
+        "User-Agent": "mmcc.io",
+      },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.stargazers_count;
+  } catch {
+    return null;
+  }
+}
+
+// Fetch stars for all projects
+const projectsWithStars = await Promise.all(
+  projects.map(async (project) => ({
+    ...project,
+    stars: await getStars(project.repo),
+  }))
+);
+
+function formatStars(stars: number | null): string {
+  if (stars === null) return "";
+  if (stars >= 1000) {
+    return `${(stars / 1000).toFixed(1)}k`;
+  }
+  return stars.toString();
+}
+---
+
+<BaseLayout title="open source / mmcc" description="Open source projects by Matthew McClure">
+  <section class="oss">
+    <h1>open source</h1>
+    <p class="intro">Projects I've created or significantly contributed to.</p>
+    
+    <ul class="projects">
+      {projectsWithStars.map((project) => (
+        <li class="project">
+          <a href={`https://github.com/${project.repo}`}>
+            <div class="project-header">
+              <span class="name">{project.name}</span>
+              {project.stars !== null && (
+                <span class="stars">★ {formatStars(project.stars)}</span>
+              )}
+            </div>
+            <p class="description">{project.description}</p>
+            {project.role && <span class="role">{project.role}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: 0.875rem;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+  }
+
+  .intro {
+    color: var(--color-text-muted);
+    margin-bottom: calc(var(--spacing-unit) * 6);
+  }
+
+  .projects {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .project {
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    padding-bottom: calc(var(--spacing-unit) * 4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .project:last-child {
+    border-bottom: none;
+  }
+
+  .project a {
+    display: block;
+    text-decoration: none;
+  }
+
+  .project-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: calc(var(--spacing-unit) * 1);
+  }
+
+  .name {
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .project a:hover .name {
+    opacity: 0.7;
+  }
+
+  .stars {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg-subtle, rgba(128, 128, 128, 0.1));
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+  }
+
+  .description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .role {
+    display: inline-block;
+    margin-top: calc(var(--spacing-unit) * 1);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    opacity: 0.7;
+  }
+</style>

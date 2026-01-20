@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SocialLinks from "../components/SocialLinks.astro";
+
+const navLinks = [
+  { name: "posts", url: "/blog" },
+  { name: "oss", url: "/oss" },
+];
 ---
 
 <BaseLayout title="mmcc">
@@ -12,6 +17,17 @@ import SocialLinks from "../components/SocialLinks.astro";
       communities around video infrastructure.
     </p>
     <p>I like making complex things feel simple.</p>
+
+    <nav class="nav">
+      <ul>
+        {navLinks.map((link, i) => (
+          <>
+            <li><a href={link.url}>{link.name}</a></li>
+            {i < navLinks.length - 1 && <li class="sep">/</li>}
+          </>
+        ))}
+      </ul>
+    </nav>
 
     <div class="links">
       <SocialLinks />
@@ -36,8 +52,35 @@ import SocialLinks from "../components/SocialLinks.astro";
     color: var(--color-text);
   }
 
-  .links {
+  .nav {
     margin-top: calc(var(--spacing-unit) * 6);
+  }
+
+  .nav ul {
+    display: flex;
+    gap: calc(var(--spacing-unit) * 2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .nav a:hover {
+    opacity: 0.7;
+  }
+
+  .nav .sep {
+    color: var(--color-border);
+    user-select: none;
+  }
+
+  .links {
+    margin-top: calc(var(--spacing-unit) * 4);
     padding-top: calc(var(--spacing-unit) * 4);
     border-top: 1px solid var(--color-border);
   }
