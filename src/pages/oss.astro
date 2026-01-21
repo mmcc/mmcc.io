@@ -89,7 +89,7 @@ function formatStars(stars: number): string {
           <a href={`https://github.com/${project.repo}`}>
             <div class="project-header">
               <span class="name">{project.name}</span>
-              <span class="stars">★ {formatStars(project.stars)}</span>
+              <span class="stars"><span class="star-icon">★</span> {formatStars(project.stars)}</span>
             </div>
             <p class="description">{project.description}</p>
             {project.role && <span class="role">{project.role}</span>}
@@ -153,12 +153,19 @@ function formatStars(stars: number): string {
   }
 
   .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
     font-size: 0.75rem;
     color: var(--color-text-muted);
     background: var(--color-bg-subtle, rgba(128, 128, 128, 0.1));
     padding: 0.1rem 0.4rem;
     border-radius: 3px;
     white-space: nowrap;
+  }
+
+  .star-icon {
+    line-height: 1;
   }
 
   .description {
