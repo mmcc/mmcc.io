@@ -270,11 +270,12 @@ function writePost(post, existingUrls) {
   }
 
   const slug = slugify(post.title);
-  let filepath = join(CONTENT_DIR, `${slug}.md`);
+  const filename = `${post.date}-${slug}.md`;
+  let filepath = join(CONTENT_DIR, filename);
 
   let counter = 1;
   while (existsSync(filepath)) {
-    filepath = join(CONTENT_DIR, `${slug}-${counter}.md`);
+    filepath = join(CONTENT_DIR, `${post.date}-${slug}-${counter}.md`);
     counter++;
   }
 
