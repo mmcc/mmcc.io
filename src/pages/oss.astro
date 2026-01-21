@@ -21,10 +21,10 @@ const projects: Project[] = [
     stars: 39452,
   },
   {
-    name: "Media Chrome",
+    name: "media-chrome",
     repo: "muxinc/media-chrome",
     description: "Custom elements for making audio and video player controls",
-    role: "Creator",
+    role: "Contributor",
     stars: 2567,
   },
   {
@@ -38,7 +38,7 @@ const projects: Project[] = [
     name: "stream.new",
     repo: "muxinc/stream.new",
     description: "Record and share videos instantly",
-    role: "Creator",
+    role: "Contributor",
     stars: 583,
   },
   {
@@ -47,20 +47,6 @@ const projects: Project[] = [
     description: "Uploads Chunks! Chunked file uploads with care",
     role: "Creator",
     stars: 414,
-  },
-  {
-    name: "Mux Elements",
-    repo: "muxinc/elements",
-    description: "Custom elements for working with media in the browser",
-    role: "Creator",
-    stars: 341,
-  },
-  {
-    name: "player.style",
-    repo: "muxinc/player.style",
-    description: "A collection of media player themes",
-    role: "Creator",
-    stars: 244,
   },
   {
     name: "Mux Node SDK",
@@ -83,20 +69,6 @@ const projects: Project[] = [
     role: "Creator",
     stars: 33,
   },
-  {
-    name: "hls-video-element",
-    repo: "muxinc/hls-video-element",
-    description: "Custom element for playing HLS videos",
-    role: "Creator",
-    stars: 40,
-  },
-  {
-    name: "castable-video",
-    repo: "muxinc/castable-video",
-    description: "Cast your video element to the big screen",
-    role: "Creator",
-    stars: 25,
-  },
 ];
 
 function formatStars(stars: number): string {
@@ -114,8 +86,8 @@ const activityMap = await getAllCommitActivity(repos);
 <BaseLayout title="open source / mmcc" description="Open source projects by Matthew McClure">
   <section class="oss">
     <h1>open source</h1>
-    <p class="intro">Projects I've created or helped with.</p>
-    
+    <p class="intro">Some of the cool open source projects I've contributed to.</p>
+
     <ul class="projects">
       {projects.map((project) => (
         <li class="project">

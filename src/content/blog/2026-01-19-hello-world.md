@@ -6,9 +6,7 @@ tags:
   - meta
 ---
 
-New site. Built with [Astro](https://astro.build/) because I wanted something minimal that stays out of the way.
-
-The old one was a static HTML page from 2015. It did its job—a few social links—but I've been meaning to have a place to write.
+A decade is probably about the right time for a refresh of the personal site. Simple, fresh [Astro](https://astro.build/) joint. Don't expect much original content here tbh, I spend most of my rare writing time on Mux/Demuxed stuff.
 
 ## what to expect
 
@@ -17,5 +15,6 @@ Sporadic posts about:
 - Video and streaming infrastructure
 - Developer tools and DX
 - Whatever I'm tinkering with
+- I dunno...stuff. Sporadically.
 
-We'll see.
+Well...until next time. Sporadically.
