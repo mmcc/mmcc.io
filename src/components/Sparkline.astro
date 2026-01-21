@@ -1,0 +1,66 @@
+---
+interface Props {
+  data: number[];
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const { data, width = 80, height = 20, color = 'currentColor' } = Astro.props;
+
+// Generate SVG path for the sparkline
+function generatePath(values: number[], w: number, h: number): string {
+  if (!values || values.length === 0) return '';
+  
+  const max = Math.max(...values, 1); // min 1 to avoid division by zero
+  const padding = 2;
+  const innerH = h - padding * 2;
+  const innerW = w - padding * 2;
+  const step = innerW / (values.length - 1);
+  
+  const points = values.map((v, i) => {
+    const x = padding + i * step;
+    const y = padding + innerH - (v / max) * innerH;
+    return `${x},${y}`;
+  });
+  
+  return `M ${points.join(' L ')}`;
+}
+
+const path = generatePath(data, width, height);
+const hasData = data && data.length > 0 && data.some(v => v > 0);
+---
+
+{hasData ? (
+  <svg 
+    width={width} 
+    height={height} 
+    viewBox={`0 0 ${width} ${height}`}
+    class="sparkline"
+    aria-label="Commit activity"
+  >
+    <path 
+      d={path} 
+      fill="none" 
+      stroke={color}
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+) : (
+  <span class="no-activity" aria-label="No recent activity">—</span>
+)}
+
+<style>
+  .sparkline {
+    vertical-align: middle;
+    opacity: 0.6;
+  }
+  
+  .no-activity {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    opacity: 0.4;
+  }
+</style>

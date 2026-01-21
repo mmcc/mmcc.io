@@ -33,4 +33,4 @@ Pushes to `main`/`master` automatically deploy to GitHub Pages via Actions.
 
 ## TODO
 
-- [ ] Add `GITHUB_TOKEN` env var and fetch real commit activity for /oss sparklines
+- [x] Add `GITHUB_TOKEN` env var and fetch real commit activity for /oss sparklines

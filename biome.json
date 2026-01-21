@@ -30,7 +30,7 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
+      "quoteStyle": "single",
       "semicolons": "always"
     }
   },
@@ -38,6 +38,9 @@
     "formatter": {
       "enabled": true
     }
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true
   },
   "assist": {
     "enabled": true,
