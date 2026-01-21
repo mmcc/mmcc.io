@@ -1,7 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Sparkline from "../components/Sparkline.astro";
-import { getAllCommitActivity } from "../lib/github";
 
 interface Project {
   name: string;
@@ -78,9 +76,6 @@ function formatStars(stars: number): string {
   return stars.toString();
 }
 
-// Fetch commit activity for all repos at build time
-const repos = projects.map(p => p.repo);
-const activityMap = await getAllCommitActivity(repos);
 ---
 
 <BaseLayout title="open source / mmcc" description="Open source projects by Matthew McClure">
@@ -94,10 +89,7 @@ const activityMap = await getAllCommitActivity(repos);
           <a href={`https://github.com/${project.repo}`}>
             <div class="project-header">
               <span class="name">{project.name}</span>
-              <div class="meta">
-                <Sparkline data={activityMap.get(project.repo) || []} />
-                <span class="stars">★ {formatStars(project.stars)}</span>
-              </div>
+              <span class="stars">★ {formatStars(project.stars)}</span>
             </div>
             <p class="description">{project.description}</p>
             {project.role && <span class="role">{project.role}</span>}
@@ -158,12 +150,6 @@ const activityMap = await getAllCommitActivity(repos);
 
   .project a:hover .name {
     opacity: 0.7;
-  }
-
-  .meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
   }
 
   .stars {
