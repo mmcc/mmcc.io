@@ -2,10 +2,6 @@
  * Fetch commit activity from GitHub API
  */
 
-interface CommitActivity {
-  weeks: number[]; // commits per week for last 12 weeks
-}
-
 export async function getCommitActivity(repo: string): Promise<number[]> {
   const token = import.meta.env.GITHUB_TOKEN;
 
